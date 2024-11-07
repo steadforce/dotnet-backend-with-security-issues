@@ -1,0 +1,40 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:latest
+    container_name: postgres-db-security-issues-backend
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+      POSTGRES_DB: security-issues
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U admin -d security-issues"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+  webapp:
+    image: mcr.microsoft.com/dotnet/aspnet:8.0
+    container_name: dotnet-security-issues-backend
+    environment:
+     PSQL_DB_HOSTNAME: "postgres-db-security-issues-backend"
+     PSQL_DB_PORT: "5433"
+     PSQL_DB_DATABASE: "security-issues"
+     PSQL_DB_USERNAME: "admin"
+     PSQL_DB_PASSWORD: "admin"
+
+    build:
+      context: .
+      dockerfile: Dockerfile    
+    ports:
+      - "8080:80"
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+volumes:
+  postgres-data:
