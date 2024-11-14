@@ -1,4 +1,5 @@
-using DotnetBackendWithSecurityIssues.Api.Database;
+using DotnetBackendWithSecurityIssues.Api.Models.Forum;
+using DotnetBackendWithSecurityIssues.Api.Service;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DotnetBackendWithSecurityIssues.Api.Controllers
@@ -8,39 +9,35 @@ namespace DotnetBackendWithSecurityIssues.Api.Controllers
     public class IssuesForumController : ControllerBase
     {        
         private readonly ILogger<IssuesForumController> _logger;
-        private readonly IDbForumOperations _dbForumOperations;
+        private readonly IIssuesForumOperations _dbForumOperations;
 
         public IssuesForumController(
             ILogger<IssuesForumController> logger,
-            IDbForumOperations dbForumOperations)
+            IIssuesForumOperations dbForumOperations)
         {
             _logger = logger;
             _dbForumOperations = dbForumOperations;
         }
-
-        [HttpGet("/Get")]
-        public void Get(HttpGetAttribute httpGetAttribute)
+        [HttpPost("/SaveEntry")]
+        public async Task<IActionResult> PostEntryAsync([FromBody] ForumRequestObject entry)
         {
-            
-        }
-
-        [HttpPost("/Post")]
-        public void Post(HttpPostAttribute httpPostAttribute)
-        {
-
+            var result = await _dbForumOperations.CreateEntry(entry);
+            return Ok();
         }
 
         [HttpGet("/GetAllEntries")]
         public async Task<IActionResult> GetAllEntries()
         {
             var forumEntries = await _dbForumOperations.GetAllEntries();
+            forumEntries.Reverse();
             return Ok(forumEntries);
         }
 
         [HttpGet("/Reset")]
-        public async Task Reset()
+        public async Task<IActionResult> Reset()
         {
             await _dbForumOperations.Seed();
+            return Ok();
         }
     }
 }

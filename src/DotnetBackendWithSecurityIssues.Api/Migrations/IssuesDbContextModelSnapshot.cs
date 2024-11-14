@@ -21,7 +21,7 @@ namespace DotnetBackendWithSecurityIssues.Api.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("DotnetBackendWithSecurityIssues.Api.Models.IssuesDbModelForum", b =>
+            modelBuilder.Entity("DotnetBackendWithSecurityIssues.Api.Models.Forum.ForumIssuesDbModel", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()

@@ -30,8 +30,6 @@ public static class IssuesDbContextDiExtension
 
                 options.UseNpgsql(connectionString);
             });
-
-        services.BuildServiceProvider();
-        
+        services.BuildServiceProvider();    
     }
 }

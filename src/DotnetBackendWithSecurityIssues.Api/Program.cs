@@ -1,4 +1,5 @@
 using DotnetBackendWithSecurityIssues.Api.Database;
+using DotnetBackendWithSecurityIssues.Api.Service;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,7 +13,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-IssuesDbBoostrapper.UpdateDatabase(app.Services);
+await IssuesDbBoostrapper.UpdateDatabaseAsync(app.Services);
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
@@ -21,13 +22,11 @@ app.MapControllers();
 
 app.Run();
 
-void RegisterServices(IServiceCollection services, IConfiguration configuration)
+static void RegisterServices(IServiceCollection services, IConfiguration configuration)
 {
     services.AddControllers();
     services.AddEndpointsApiExplorer();
     services.AddSwaggerGen();
     services.AddIssuesDatabase(configuration);
-    services.AddScoped<IDbForumOperations, DbForumOperations>();
+    services.AddScoped<IIssuesForumOperations, IssuesForumOperations>();    
 }
-
-
