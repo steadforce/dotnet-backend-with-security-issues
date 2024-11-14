@@ -14,13 +14,13 @@ public class IssuesForumOperations : IIssuesForumOperations
         _context = context;
     }
 
-    public async Task<List<ForumIssuesDbModel>> GetAllEntries()
+    public async Task<IEnumerable<ForumIssuesDbModel>> GetAllEntries()
     {
         if (!_context.IssuesDbModelForum.Any())
         {
             await Seed();
         }
-        return await _context.IssuesDbModelForum.ToListAsync();
+        return _context.IssuesDbModelForum;
     }
 
     public async Task<int> CreateEntry(ForumRequestObject forum)
@@ -32,14 +32,13 @@ public class IssuesForumOperations : IIssuesForumOperations
         };
 
         _context.IssuesDbModelForum.Add(newDBEntry);
-        var result = await _context.SaveChangesAsync();
-        return result;
+        return await _context.SaveChangesAsync();
     }
 
     public async Task Seed()
     {
         await DeleteData();
-        var listData = await SeedingData.GetSedingDataAsync();
+        var listData = await SeedingData.GetSeedingDataAsync();
 
         List<ForumIssuesDbModel> listDbData = listData.Select(x => new ForumIssuesDbModel
         {
