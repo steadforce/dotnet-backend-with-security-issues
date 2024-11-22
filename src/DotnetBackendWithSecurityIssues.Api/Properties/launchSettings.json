@@ -18,10 +18,10 @@
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
         "PSQL_DB_HOSTNAME": "localhost",
-        "PSQL_DB_PORT": "5433",
+        "PSQL_DB_PORT": "5435",
         "PSQL_DB_DATABASE": "security-issues",
         "PSQL_DB_USERNAME": "admin",
-        "PSQL_DB_PASSWORD": "admin"
+        "PSQL_DB_PASSWORD": "<your password>"
 
       }
     }

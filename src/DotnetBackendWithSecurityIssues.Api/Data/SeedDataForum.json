@@ -1,11 +1,9 @@
 ﻿[
-    {
-        "id": "1",
+    {        
         "title": "First entry",
         "content": "I am the first entry in our forum"
     },
     {
-        "id": "2",
         "title": "Second entry",
         "content": "I am the second entry in our forum"
     }

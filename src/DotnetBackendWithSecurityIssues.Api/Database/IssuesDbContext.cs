@@ -1,4 +1,4 @@
-﻿using DotnetBackendWithSecurityIssues.Api.Models;
+﻿using DotnetBackendWithSecurityIssues.Api.Models.Forum;
 using Microsoft.EntityFrameworkCore;
 
 namespace DotnetBackendWithSecurityIssues.Api.Database;
@@ -12,7 +12,7 @@ public class IssuesDbContext : DbContext
     {
         modelBuilder.OnModelCreating();
     }
-    public DbSet<IssuesDbModelForum> IssuesDbModelForum { get; set; } = null!;
+    public DbSet<ForumIssuesDbModel> IssuesDbModelForum { get; set; } = null!;
 }
 
 
