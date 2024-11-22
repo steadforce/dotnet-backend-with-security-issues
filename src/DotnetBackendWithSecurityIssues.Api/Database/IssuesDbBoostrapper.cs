@@ -17,12 +17,12 @@ public class IssuesDbBoostrapper
 
         // Clean db and seed data
         context.IssuesDbModelForum.RemoveRange(context.IssuesDbModelForum);
-        var listData = await SeedingData.GetSedingDataAsync();
-        List<ForumIssuesDbModel> listDbData = listData.Select(x => new ForumIssuesDbModel
+        var listData = await SeedingData.GetSeedingDataAsync();
+        var listDbData = listData.Select(x => new ForumIssuesDbModel
         {
             Title = x.Title,
             Content = x.Content
-        }).ToList();
+        });
 
         await context.IssuesDbModelForum.AddRangeAsync(listDbData);
         await context.SaveChangesAsync();

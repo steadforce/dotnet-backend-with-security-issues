@@ -9,7 +9,7 @@ services:
       POSTGRES_PASSWORD: admin
       POSTGRES_DB: security-issues
     ports:
-      - "5435:5432"
+      - "5432:5432"
     volumes:
       - pgdata:/var/lib/postgresql/data
     healthcheck:
@@ -21,17 +21,18 @@ services:
     image: mcr.microsoft.com/dotnet/aspnet:8.0
     container_name: dotnet-security-issues-backend
     environment:
-       PSQL_DB_HOSTNAME: "postgres-db-security-issues-backend"
-       PSQL_DB_PORT: "5435"
-       PSQL_DB_DATABASE: "security-issues"
-       PSQL_DB_USERNAME: "admin"
-       PSQL_DB_PASSWORD: "<your password>"
+       ASPNETCORE_ENVIRONMENT: "Development"
+       POSTGRES__HOSTNAME: "postgres-db-security-issues-backend"
+       POSTGRES__PORT: "5432"
+       POSTGRES__DATABASE: "security-issues"
+       POSTGRES__USERNAME: "admin"
+       POSTGRES__PASSWORD: "admin"
 
     build:
       context: .
       dockerfile: Dockerfile    
     ports:
-      - "8080:80"
+      - "8080:8080"
     depends_on:
       postgres:
         condition: service_healthy

@@ -5,7 +5,7 @@ namespace DotnetBackendWithSecurityIssues.Api.Utils;
 
 public static class SeedingData
 {
-    public static async Task<List<ForumRequestObject>> GetSedingDataAsync()
+    public static async Task<List<ForumRequestObject>> GetSeedingDataAsync()
     {
         string filePath = Path.Combine(AppContext.BaseDirectory, "Data", "SeedDataForum.json");
         List<ForumRequestObject> issuesList = [];

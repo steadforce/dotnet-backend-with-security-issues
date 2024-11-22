@@ -18,6 +18,7 @@ namespace DotnetBackendWithSecurityIssues.Api.Controllers
             _logger = logger;
             _dbForumOperations = dbForumOperations;
         }
+
         [HttpPost("/SaveEntry")]
         public async Task<IActionResult> PostEntryAsync([FromBody] ForumRequestObject entry)
         {
