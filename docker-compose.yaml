@@ -6,7 +6,7 @@ services:
     container_name: postgres-db-security-issues-backend
     environment:
       POSTGRES_USER: admin
-      POSTGRES_PASSWORD: admin
+      POSTGRES_PASSWORD: <your password>
       POSTGRES_DB: security-issues
     ports:
       - "5435:5432"
@@ -18,7 +18,7 @@ services:
       timeout: 5s
       retries: 5
   webapp:
-    image: mcr.microsoft.com/dotnet/aspnet:8.0
+    image: mcr.microsoft.com/dotnet/aspnet:9.0
     container_name: dotnet-security-issues-backend
     environment:
        PSQL_DB_HOSTNAME: "postgres-db-security-issues-backend"
