@@ -6,7 +6,7 @@ services:
     container_name: postgres-db-security-issues-backend
     environment:
       POSTGRES_USER: admin
-      POSTGRES_PASSWORD: <your password>
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
       POSTGRES_DB: security-issues
     ports:
       - "5435:5432"
