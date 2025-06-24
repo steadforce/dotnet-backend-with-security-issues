@@ -22,7 +22,6 @@
         "PSQL_DB_DATABASE": "security-issues",
         "PSQL_DB_USERNAME": "admin",
         "PSQL_DB_PASSWORD": "<your password>"
-
       }
     }
   }

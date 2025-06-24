@@ -1,40 +1,36 @@
-version: '3.8'
-
 services:
   postgres:
     image: postgres:latest
     container_name: postgres-db-security-issues-backend
     environment:
       POSTGRES_USER: admin
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_PASSWORD: ${PSQL_DB_PASSWORD}
       POSTGRES_DB: security-issues
     ports:
       - "5435:5432"
     volumes:
-      - pgdata:/var/lib/postgresql/data
+      - pgdata:/var/lib/postgresql/data  
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U admin -d security-issues"]
       interval: 10s
       timeout: 5s
       retries: 5
-  webapp:
-    image: mcr.microsoft.com/dotnet/aspnet:9.0
+  backend:    
     container_name: dotnet-security-issues-backend
     environment:
+       ASPNETCORE_URLS: "http://0.0.0.0:7276"
        PSQL_DB_HOSTNAME: "postgres-db-security-issues-backend"
-       PSQL_DB_PORT: "5435"
+       PSQL_DB_PORT: "5432"
        PSQL_DB_DATABASE: "security-issues"
        PSQL_DB_USERNAME: "admin"
-       PSQL_DB_PASSWORD: "<your password>"
-
+       PSQL_DB_PASSWORD: ${PSQL_DB_PASSWORD}
     build:
       context: .
-      dockerfile: Dockerfile    
+      dockerfile: Dockerfile
     ports:
-      - "8080:80"
+      - "8080:7276"
     depends_on:
       postgres:
-        condition: service_healthy
-
+        condition: service_healthy  
 volumes:
   pgdata:

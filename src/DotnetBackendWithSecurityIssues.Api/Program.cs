@@ -7,11 +7,8 @@ RegisterServices(builder.Services, builder.Configuration);
 
 var app = builder.Build();
 
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+app.UseSwagger();
+app.UseSwaggerUI();
 
 await IssuesDbBoostrapper.UpdateDatabaseAsync(app.Services);
 app.UseHttpsRedirection();
@@ -19,14 +16,24 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
-
+app.UseCors("AllowAllOrigins");
 app.Run();
 
 static void RegisterServices(IServiceCollection services, IConfiguration configuration)
 {
-    services.AddControllers();
-    services.AddEndpointsApiExplorer();
-    services.AddSwaggerGen();
-    services.AddIssuesDatabase(configuration);
-    services.AddScoped<IIssuesForumOperations, IssuesForumOperations>();    
+  services.AddCors(options =>
+  {
+    options.AddPolicy("AllowAllOrigins", policy =>
+    {
+      policy.AllowAnyOrigin()
+            .AllowAnyHeader()
+            .AllowAnyMethod();
+    });
+  });
+
+  services.AddControllers();
+  services.AddEndpointsApiExplorer();
+  services.AddSwaggerGen();
+  services.AddIssuesDatabase(configuration);
+  services.AddScoped<IIssuesForumOperations, IssuesForumOperations>();
 }
