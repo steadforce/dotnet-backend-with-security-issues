@@ -5,21 +5,21 @@ namespace DotnetBackendWithSecurityIssues.Api.Utils;
 
 public static class SeedingData
 {
-    public static async Task<List<ForumRequestObject>> GetSedingDataAsync()
+  public static async Task<List<ForumRequestObject>> GetSedingDataAsync()
+  {
+    string filePath = Path.Combine(AppContext.BaseDirectory, "Data", "SeedDataForum.json");
+    List<ForumRequestObject> issuesList = [];
+
+    if (File.Exists(filePath))
     {
-        string filePath = Path.Combine(AppContext.BaseDirectory, "Data", "SeedDataForum.json");
-        List<ForumRequestObject> issuesList = [];
+      var jsonData = await File.ReadAllTextAsync(filePath);
 
-        if (File.Exists(filePath))
-        {
-            var jsonData = await File.ReadAllTextAsync(filePath);
-
-            var options = new JsonSerializerOptions
-            {
-                PropertyNameCaseInsensitive = true
-            };
-            issuesList = JsonSerializer.Deserialize<List<ForumRequestObject>>(jsonData, options) ?? [];
-        }
-        return issuesList;
+      var options = new JsonSerializerOptions
+      {
+        PropertyNameCaseInsensitive = true
+      };
+      issuesList = JsonSerializer.Deserialize<List<ForumRequestObject>>(jsonData, options) ?? [];
     }
+    return issuesList;
+  }
 }
